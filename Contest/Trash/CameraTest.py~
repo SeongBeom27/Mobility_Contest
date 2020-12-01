@@ -1,0 +1,14 @@
+import traitlets
+import os
+from jetbot import Robot
+from jetbot import Camera
+from jetbot import bgr8_to_jpeg
+
+robot = Robot()
+camera = Camera.instance()
+print(camera.value)
+camera.stop()
+os._exit(1)
+
+
+

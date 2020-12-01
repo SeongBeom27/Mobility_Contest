@@ -1,0 +1,23 @@
+import traitlets
+import cv2
+import os
+import argparse
+import time
+from jetbot import Robot
+from jetbot import Camera
+from jetbot import bgr8_to_jpeg
+try:
+	parser = argparse.ArgumentParser(description='Process some integers.')
+	args = parser.parse_args()
+
+
+	robot = Robot()
+	camera = Camera.instance()
+	img = camera.value
+	cv2.imwrite('./project_1_lane_finding_basic/Picture/LaneDetectionTest.jpg', img)
+	camera.stop()
+	os._exit(1)
+except:
+	camera.stop()
+
+
