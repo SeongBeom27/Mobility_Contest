@@ -65,42 +65,41 @@ obstacleflag = False
 
 def Start():
 	while(True):
-		robot.forward(speed)
-        image = camera.value
-		presentx, presenty = mainfunc(image)						# prsent location 
-		step = 0.005
-		# Using right_up, left_up
-		while presentx < staticx:
-			step += 0.005
-			robot.right_up(speed, step)
-			presentx, presenty = Presentlocation()					# Comapre present with staticlocation
-		
-		while presentx > staticx:
-			step += 0.005
-			robot.left_up(speed, step)
-			presentx, presenty = Presentlocation()					# 
-
-		step = 0.005
-		# obstacle
-		if !obstacleflag:
-			if dist < threshold:
-				obstacleflag = True
-				avoid()
-		
-		# stop line
-		if(!stoplineflag):
-			if(CheckStopimg(pimg)):
-				robot.stop()
-				sleep(3)
-				stoplineflag = True
-		
-		# dark light
+        try: 
+            image = camera.value
+            presentx, presenty = mainfunc(image)						# prsent location 
+            robot.forward(speed)
+            diff = presentx - staticx
+            if(abs(diff) < 5)
+                robot.forward(speed)
+                robot.set_motors(speed, speed)
+            # Right motor up
+            if(diff < 0):
+                robot.set_motors(speed, speed + 0.05)
+            else:
+                robot.set_motors(speed + 0.05, speed)
+           ''' 
+            # obstacle
+            if !obstacleflag:
+                if dist < threshold:
+                    obstacleflag = True
+                    avoid()
+            
+            # stop line
+            if(!stoplineflag):
+                if(CheckStopimg(pimg)):
+                    robot.stop()
+                    sleep(3)
+                    stoplineflag = True
+            
+            # dark light
 
 
-		# strong light
-
-		
-	
+            # strong light
+                    '''
+        except:
+            camera.stop()
+            return False    
 
 if __name__ == "__main__":
 	while(True):

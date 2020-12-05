@@ -30,18 +30,18 @@ def CenterCalculation(left, right):
 
 blue_color = (255,0,0)
 #robot = Robot()
-#image = cv2.imread('./Picture/Light_Test3Namespace().jpg')
-image = cv2.imread('./Picture/Hough_lines_img3.jpg')
+image = cv2.imread('./Picture/Light_Test3Namespace().jpg')
+#image = cv2.imread('./Picture/Hough_lines_img3.jpg')
 
 #image = cv2.imread('./Picture/solidWhiteRight.jpg')
 #image = cv2.imread('./Picture/LaneDetectionTest.jpg') # 이미지 읽기
 #camera = Camera.instance()
 #image = camera.value
-
+'''
 if image.all() == False:
 	print("You couldn't read image ")
 	sys.exit()
-
+'''
 leftarr, rightarr = mainfunc(image)
 presentx, presenty = CenterCalculation(leftarr, rightarr)
 #img = cv2.rectangle(image, 
