@@ -1,25 +1,25 @@
 from jetbot import Robot
+from jetbot import Camera
 import time
 import socket
-from Tracing_White import mainfunc
+from Paragon_function import mainfunc
 import cv2
 import os
 import time
+import sys
 
 # Global vairables
 robot = Robot()
 camera = Camera.instance()
 
-# leftline, rightline
-leftarr, rightarr = mainfunc(image)
 
 # Draw Rectangle which paragon will follow
-img = cv2.rectangle(image, (leftarr[0,2] + 30,leftarr[0,3]), (rightarr[0,2] - 50,rightarr[0,3]), blue_color,-1)
-
+#img = cv2.rectangle(image, (leftarr[0,2] + 30,leftarr[0,3]), (rightarr[0,2] - 50,rightarr[0,3]), blue_color,-1)
+'''
 def step_forward(t):
 	robot.forward(0.35)
     time.sleep(t)
-
+'''
 def frontLidar():
 	'''
 	dist calcuation
@@ -56,29 +56,52 @@ cv2.waitKey(0)
 speed = 0.33
 
 staticx = 112
-presentx, presenty = CenterCalculation() 
 threshold = 30
 
 stoplineflag = False												# stop line flag
 obstacleflag = False
 
 
-def Start():
-	while(True):
-        try: 
+
+if __name__ == "__main__":
+    print('----------------------------------------------------------------------------------------------')
+    print('Race start after 3seconds')
+    time.sleep(3)
+    while(True):
+        try:
+            # leftline, rightline
             image = camera.value
-            presentx, presenty = mainfunc(image)						# prsent location 
-            robot.forward(speed)
+            print('Load image success')
+            leftarr, rightarr = mainfunc(image)
+            print('Get left, right line', leftarr, rightarr)
+            presentx, presenty = CenterCalculation(leftarr, rightarr) 
+            print('Center x, Center y :  ', presentx, presenty)
             diff = presentx - staticx
-            if(abs(diff) < 5)
+            if abs(diff) < 5:
+                print('Preseont dicrect is correct just straight')
                 robot.forward(speed)
                 robot.set_motors(speed, speed)
             # Right motor up
-            if(diff < 0):
+            if diff < 0:
+                print('Go left!!!! Right motor up')
                 robot.set_motors(speed, speed + 0.05)
             else:
+                print('Go right!!!! left motor up')
                 robot.set_motors(speed + 0.05, speed)
-           ''' 
+        except KeyboardInterrupt:
+            print('Ctrl + C press Exit Paragon Program')
+            camera.stop()
+            print('----------------------------------------------------------------------------------------------')
+            print('Race start after 3seconds')
+            sys.exit()
+        except:
+            print('Non Error occur Exit Paragon Program')
+            camera.stop()
+            print('----------------------------------------------------------------------------------------------')
+            print('Race start after 3seconds')
+            sys.exit()
+
+''' 
             # obstacle
             if !obstacleflag:
                 if dist < threshold:
@@ -96,13 +119,4 @@ def Start():
 
 
             # strong light
-                    '''
-        except:
-            camera.stop()
-            return False    
-
-if __name__ == "__main__":
-	while(True):
-		if(!Start()):
-			break
-
+'''
